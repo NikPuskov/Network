@@ -140,6 +140,8 @@
 
 `systemctl status ufw`
 
+image
+
 `systemctl stop ufw`
 
 `systemctl disable ufw`
@@ -158,11 +160,7 @@
 
 - Создаём файл /etc/network/if-pre-up.d/iptables, в который добавим скрипт автоматического восстановления правил при перезапуске системы:
 
-    #!/bin/sh
- 
-    iptables-restore < /etc/iptables.rules
- 
-    exit 0
+image
 
 `chmod +x /etc/network/if-pre-up.d/iptables`
 
@@ -180,14 +178,40 @@
 
 - Для отключения маршрута по умолчанию в файле /etc/netplan/00-installer-config.yaml добавляем отключение маршрутов, полученных через DHCP:
 
-# This is the network config written by 'subiquity'
-network:
-  ethernets:
-    eth0:
-      dhcp4: true
-      dhcp4-overrides:
-        use-routes: false
-      dhcp6: false
-  version: 2
+image
 
-  
+- После внесения данных изменений перезапускаем сетевую службу:
+
+`netplan try`
+
+3. Настраиваем статические маршруты Временно (до первой перезагрузки) статические маршруты можно установить командой:
+
+`ip route add 0.0.0.0/0 via 192.168.2.129`
+
+- Удалить маршрут:
+
+`ip route del 0.0.0.0/0 via 192.168.2.129`
+
+- Для того, чтобы маршруты сохранялись после перезагрузки нужно их указывать непосредственно в файле конфигурации сетевых интерфейсов:
+
+В современных версиях Ubuntu, для указания маршрута нужно поправить netplan-конфиг. Конфиги netplan хранятся в виде YAML-файлов и обычно лежат в каталоге /etc/netplan В нашем стенде такой файл - /etc/netplan/50-vagrant.yaml
+
+Для добавления маршрута, после раздела addresses нужно добавить блок:
+
+image
+
+Пример файла /etc/netplan/50-vagrant.yaml
+
+image
+
+- Применить настройки:
+
+`netplan try`
+
+- Подобным образом настраваем маршруты на всех необходимых устройствах.
+
+4. Устанавливаем traceroute и проверяем выход в интернет на серверах:
+
+`apt install -y traceroute`
+
+`traceroute -n 8.8.8.8`
