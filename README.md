@@ -180,20 +180,14 @@
 
 - Для отключения маршрута по умолчанию в файле /etc/netplan/00-installer-config.yaml добавляем отключение маршрутов, полученных через DHCP:
 
+# This is the network config written by 'subiquity'
 network:
-  
   ethernets:
-    
     eth0:
-      
       dhcp4: true
-      
       dhcp4-overrides:
-        
         use-routes: false
-      
       dhcp6: false
-  
   version: 2
 
   
