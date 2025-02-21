@@ -134,4 +134,36 @@
 
 1. Создаём виртуальные машины `vagrant up`
 
-2. 
+2. Настраиваем маршрутизатор inetRouter:
+
+- Настраиваем NAT Проверяем что отключен фаервол ufw и отключаем его если включен:
+
+`systemctl status ufw`
+
+`systemctl stop ufw`
+
+`systemctl disable ufw`
+
+- Включаем маскарадинг:
+
+`iptables -t nat -A POSTROUTING ! -d 192.168.0.0/16 -o eth0 -j MASQUERADE`
+
+- Посмотреть правила iptables:
+
+`iptables -L -v -t nat`
+
+- Правила iptables нужно сохранить и настроить их автоматическую настройку после перезагрузки машрутизатора. Сохраняем правила в файл:
+
+`iptables-save > /etc/iptables.rules`
+
+- Создаём файл /etc/network/if-pre-up.d/iptables, в который добавим скрипт автоматического восстановления правил при перезапуске системы:
+
+    #!/bin/sh
+ 
+    iptables-restore < /etc/iptables.rules
+ 
+    exit 0
+
+`chmod +x /etc/network/if-pre-up.d/iptables`
+
+
