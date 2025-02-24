@@ -2,7 +2,7 @@
 
 - hosts: all
   become: yes
-  name: otus lesson 28 
+  name: otus Network 
 
   tasks:
     - name: stop firewall ufw, if started
