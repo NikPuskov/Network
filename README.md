@@ -196,11 +196,11 @@
 
 Для добавления маршрута, после раздела addresses нужно добавить блок:
 
-image
+![Image alt](https://github.com/NikPuskov/Network/blob/main/Network3.jpg)
 
 Пример файла /etc/netplan/50-vagrant.yaml
 
-image
+![Image alt](https://github.com/NikPuskov/Network/blob/main/Network4.jpg)
 
 - Применить настройки:
 
