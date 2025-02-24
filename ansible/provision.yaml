@@ -2,7 +2,7 @@
 
 - hosts: all
   become: yes
-  name: otus Network 
+  name: Network 
 
   tasks:
     - name: stop firewall ufw, if started
