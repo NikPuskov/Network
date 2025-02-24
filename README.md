@@ -176,7 +176,7 @@
 
 - Для отключения маршрута по умолчанию в файле /etc/netplan/00-installer-config.yaml добавляем отключение маршрутов, полученных через DHCP:
 
-image
+![Image alt](https://github.com/NikPuskov/Network/blob/main/Network2.jpg)
 
 - После внесения данных изменений перезапускаем сетевую службу:
 
